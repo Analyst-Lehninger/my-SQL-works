@@ -1,0 +1,5 @@
+###The queries were requested by the professor. My SQL code will follow.
+Prompt: List all the products in the Northwinds database showing productid, productname, quantity per unit, unitprice, and unitsinstock.
+###my code
+SELECT *
+FROM products
