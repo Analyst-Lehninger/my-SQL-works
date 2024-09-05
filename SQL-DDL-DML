@@ -1,0 +1,40 @@
+# SQL DDL DML
+Data Definition Language - create, remove, and modify database structures
+```Create
+```Alter
+```Drop
+
+
+Data Manipulation Language - create, remove, modify Data values
+```Insert
+```Update
+```Delete
+```Truncate
+
+Prompt: Create an “items” table with the following schema: 
+  items itemIDintegerprimary key, 
+  itemcode, varchar(5)null,
+  itemnamevarchar(40) not null default “ “,
+  quantity integernot null default 0,
+  price decimal (9,2)not null default 0
+
+# my code
+  CREATE TABLE items  
+(   itemID     INT           primary key, 
+    itemcode   VARCHAR(5)    NULL, 
+    itemname   VARCHAR(40)   NOT NULL DEFAULT ' ', 
+    quantity   INT           NOT NULL DEFAULT 0, 
+    price      DECIMAL(9,2)  NOT NULL DEFAULT 0)
+    ; 
+
+Drop the “demo” aka ‘items’ table
+# my code
+DROP items;
+DROP TABLE demo
+
+Delete the rows you just added  to the “demo” table
+# my code
+DELETE FROM items
+	WHERE itemid IN (101, 102);
+SELECT * FROM items
+	WHERE itemid > 100;
