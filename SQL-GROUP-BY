@@ -1,0 +1,30 @@
+# postgreSQL using the GROUP BY
+
+
+Prompt: List the total (unitprice * quantity) as “Total Value” by orderid for the top 5 orders.  (That is, the five orders with the highest Total Value.)  
+# my code
+SELECT orderid, SUM(unitprice * unitquantity) AS “Total Value”
+	FROM orderDetails
+	ORDER BY “Total Value” desc
+	LIMIT 5
+
+Prompt: How many products does Northwinds have in inventory?  
+# my code
+SELECT count(productid)  
+    FROM products 
+    WHERE unitsinstock > 0;
+
+Prompt: From which supplier(s) does Northwinds carry the fewest products? 
+# my code
+SELECT supplierID, COUNT(productID) AS “Total Products”
+	FROM products
+	GROUP BY supplierID
+	ORDER BY “Total Products”;
+
+Prompt: Which Northwinds employees (just show their employeeid) had over 100 orders ?
+# my code
+SELECT employeeID, COUNT(orderID) AS “Order Num Attribution”
+	FROM orders
+	GROUP BY employeeID
+	HAVING COUNT(orderID) > 100
+	ORDER BY 2;
