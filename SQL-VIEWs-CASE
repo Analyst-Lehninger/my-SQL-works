@@ -1,0 +1,37 @@
+# here we use VIEWs to limit access to the database
+
+Prompt Part 1/2: Create a "TopCustomers" view  using the following SELECT statement to populate the view
+# my code
+DROP VIEW IF EXISTS TopCustomers;
+Create view topcustomers AS
+	SELECT companyname, sum (unitprice * quantity) AS “Total Sales”
+	FROM customers C JOIN orders O ON c.customerid = O.customerid
+		JOIN orderdetails D ON o.orderid = d.orderid
+	GROUP BY companyname
+	ORDER BY 2 desc LIMIT 5;
+
+Prompt Part 2/2: Run a Query Against Your View to ensure that it works
+SELECT * FROM TopCustomers
+
+
+Prompt: Create your view, adding a CASE expression.  Add a third column to your view called “Assessment”.
+Set the Assessment column equal to “Needs Focus”. if the customer’s total sales is less than $60,000
+Set the Assessment column equal to “Average”. if the customer’s total sales is greater than or equal to $60,000 but less than $115,000.
+Otherwise set the Assessment column equal to “Outstanding” if the customer’s total sales is greater than or equal to $115,000.
+Run a Query Against Your View to see the CASE results.
+
+# my code
+DROP VIEW IF ExISTS TopCustomers;
+
+CREATE VIEW Topcustomers AS
+	SELECT companyname, sum(unitprice * quantity) AS “Total Sales”,
+		CASE
+			WHEN sum(unitprice * quantity) < 60000 THEN ‘Needs Focus’
+			WHEN sum(unitprice * quantity) < 115000 THEN ‘Average’
+			WHEN sum(unitprice * quantity > 115000 THEN ‘Outstanding’
+		END Assessment
+	
+FROM customers C JOIN orders O ON c.customerid = O.customerid
+		JOIN orderdetails D ON o.orderid = d.orderid
+	GROUP BY companyname
+	ORDER BY 2 desc LIMIT 5;
