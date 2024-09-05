@@ -1,0 +1,42 @@
+# These are some examples where I JOIN tables using keys (postegreSQL)
+
+Prompt: List each order and its Total Value (unitprice * quantity) for all orders shipping into France in descending Total Value order. 
+#my code
+SELECT D.orderID, O.shipcountry, SUM(unitprice * quantity) AS “Total Shipment Value”
+  FROM orderdetails D JOIN orders O ON D.orderid = D.orderID
+  WHERE shipcountry = “France”
+  Group BY D.oderID, O.shipcountry
+  ORDER BY 3 desc;  
+
+Prompt: Create a Suppliers List showing Supplier CompanyName, and names of all the products sold by each supplier located in Japan.
+# my code
+SELECT companyname, suppliers.supplierID, productname
+	FROM suppliers JOIN products ON suppliers.supplierID = product.supplierID
+	WHERE country = ‘Japan’
+	GROUP BY companyname, productname, suppliers.supplierID
+	ORDER BY 1 asc;
+
+Prompt: Are there any Northwinds employees that have no orders? 
+# my code
+SELECT firstname, lastname, e.employeeid. COUNT(orderID) AS orderCount
+	FROM employees E
+	LEFT OUTER JOIN orders O ON E.employeeid = O.employeeID
+	GROUP BY e.employeeID;
+
+Prompt: Are there any Northwinds customers that have no orders?
+# my code
+SELECT orders.orderID, customers.customerID, customers.companyname
+	FROM orders
+	RIGHT OUTER JOIN customers ON orders.customerID = customers.customerID
+	WHERE orders.orderID is NULL
+
+Prompt: Are there any Shippers that have shipped no Northwinds orders? No
+# my code, 2 ways to verify
+SELECT orders.shipvia, orders.shipname
+	FROM orders
+	RIGHT OUTER JOIN shippers ON orders.shipvia = shippers.shipperID
+	WHERE orders.shipvia IS NULL; 
+
+SELECT orders.shipvia, orders.shipname
+	FROM orders
+	WHERE orders.shipvia NOT IN (SELECT shippers.shipperID FROM shippers);
